@@ -1,10 +1,11 @@
-using Hw2;
+//using Hw2;
 using Xunit;
 
 namespace Hw2Tests
 {
     public class ParserTests
     {
+        /*
         [Theory]
         [InlineData("+", CalculatorOperation.Plus)]
         [InlineData("-", CalculatorOperation.Minus)]
@@ -35,5 +36,6 @@ namespace Hw2Tests
         {
             throw new NotImplementedException();
         }
+        */
     }
 }
