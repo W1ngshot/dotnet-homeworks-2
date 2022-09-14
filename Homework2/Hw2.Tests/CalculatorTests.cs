@@ -1,10 +1,11 @@
-using Hw2;
+//using Hw2;
 using Xunit;
 
 namespace Hw2Tests
 {
     public class CalculatorTests
     {
+        /*
         [Theory]
         [InlineData(15, 5, CalculatorOperation.Plus, 20)]
         [InlineData(15, 5, CalculatorOperation.Minus, 10)]
@@ -38,5 +39,6 @@ namespace Hw2Tests
         {
             throw new NotImplementedException();
         }
+        */
     }
 }
