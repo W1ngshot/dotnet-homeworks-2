@@ -7,7 +7,7 @@ type CalcOptions = {
     arg1: float
     arg2: float
     operation: CalculatorOperation    
-}
+} 
 
 let isArgLengthSupported (args : string[]) = args.Length = 3
 
