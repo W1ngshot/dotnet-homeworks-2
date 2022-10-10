@@ -24,7 +24,7 @@ public class ConcurrencyTests
         Assert.Equal(expected, Concurrency.Index);
     }
     
-    [Fact]
+    [Fact(Skip = "Может упасть, а может и нет")]
     public void FiveThreads_100Iterations_RaceIsHardToReproduce()
     {
         var expected = Concurrency.Increment(5, 1000);
