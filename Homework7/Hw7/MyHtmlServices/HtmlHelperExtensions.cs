@@ -108,14 +108,11 @@ public static class HtmlHelperExtensions
         if (Validator.TryValidateProperty(propertyInfo.GetValue(model), context, results) || results.Count == 0)
             return null;
 
-        return CreateValidationSpan(results[0].ErrorMessage, GetPropertyName(propertyInfo));
+        return CreateValidationSpan(results[0].ErrorMessage!, GetPropertyName(propertyInfo));
     }
 
-    private static IHtmlContent? CreateValidationSpan(string? errorMessage, string propertyName)
+    private static IHtmlContent? CreateValidationSpan(string errorMessage, string propertyName)
     {
-        if (errorMessage is null)
-            return null;
-        
         var span = new TagBuilder("span");
         span.MergeAttribute("class", "text-danger col-form-label");
         span.MergeAttribute("data-for", propertyName);
