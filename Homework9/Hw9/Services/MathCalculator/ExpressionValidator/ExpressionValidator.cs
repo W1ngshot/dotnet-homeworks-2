@@ -72,6 +72,4 @@ public class ExpressionValidator: IExpressionValidator
         errorMessage = MathErrorMessager.IncorrectBracketsNumber;
         return false;
     }
-    
-    
 }

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using Hw9.Dto;
 using Hw9.ErrorMessages;
@@ -63,6 +64,7 @@ public class MathCalculatorService : IMathCalculatorService
         return CalculateExpression(results[0], current.NodeType, results[1]);
     }
 
+    [ExcludeFromCodeCoverage]
     private static double CalculateExpression(double value1, ExpressionType expressionType, double value2) =>
         expressionType switch
         {
@@ -70,5 +72,6 @@ public class MathCalculatorService : IMathCalculatorService
             ExpressionType.Subtract => value1 - value2,
             ExpressionType.Divide => value2 == 0 ? double.NaN : value1 / value2,
             ExpressionType.Multiply => value1 * value2,
+            _ => 0
         };
 }
