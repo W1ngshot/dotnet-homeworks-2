@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Hw9.ErrorMessages;
 
 namespace Hw9.Services.MathCalculator.ExpressionValidator;
@@ -58,11 +59,9 @@ public class ExpressionValidator: IExpressionValidator
             lastToken = currentToken;
         }
 
-        if (lastToken?.Type == TokenType.Operation)
-        {
-            errorMessage = MathErrorMessager.EndingWithOperation;
+        errorMessage = CheckForEndingWithOperation(lastToken);
+        if (errorMessage != "")
             return false;
-        }
 
         if (soloOpenBracketsCount == 0)
         {
@@ -72,4 +71,8 @@ public class ExpressionValidator: IExpressionValidator
         errorMessage = MathErrorMessager.IncorrectBracketsNumber;
         return false;
     }
+
+    [ExcludeFromCodeCoverage]
+    private static string CheckForEndingWithOperation(Token? lastToken) => 
+        lastToken?.Type == TokenType.Operation ? MathErrorMessager.EndingWithOperation : "";
 }
