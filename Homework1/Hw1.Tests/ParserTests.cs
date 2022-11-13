@@ -1,7 +1,8 @@
 using System;
+using Hw1;
 using Xunit;
 
-namespace Hw1.Tests
+namespace Hw1Tests
 {
     public class ParserTests
     {
