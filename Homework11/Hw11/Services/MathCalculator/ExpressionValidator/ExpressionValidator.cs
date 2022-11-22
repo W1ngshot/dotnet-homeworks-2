@@ -23,12 +23,16 @@ public class ExpressionValidator: IExpressionValidator
                 case TokenType.Number:
                     break;
                 case TokenType.Operation:
-                    if (lastToken is null)
-                        throw new InvalidSyntaxException(MathErrorMessager.StartingWithOperation);
-                    if (lastToken is { Type: TokenType.Operation })
-                        throw new InvalidSyntaxException(MathErrorMessager.TwoOperationInRowMessage(lastToken.Value.Value, currentToken.Value));
-                    if (lastToken is { Value: "(" } && currentToken.Value != "-")
-                        throw new InvalidSyntaxException(MathErrorMessager.InvalidOperatorAfterParenthesisMessage(currentToken.Value));
+                    switch (lastToken)
+                    {
+                        case null:
+                            throw new InvalidSyntaxException(MathErrorMessager.StartingWithOperation);
+                        case { Type: TokenType.Operation }:
+                            throw new InvalidSyntaxException(MathErrorMessager.TwoOperationInRowMessage(lastToken.Value.Value, currentToken.Value));
+                        case { Value: "(" } when currentToken.Value != "-":
+                            throw new InvalidSyntaxException(MathErrorMessager.InvalidOperatorAfterParenthesisMessage(currentToken.Value));
+                    }
+
                     break;
                 case TokenType.Bracket:
                     switch (currentToken.Value)
