@@ -9,8 +9,9 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
+        
         builder.Services.AddControllersWithViews();
+        builder.Services.AddMiniProfiler();
         builder.Services.AddScoped<ICalculator, Calculator.Calculator>();
         
         var app = builder.Build();
@@ -24,6 +25,7 @@ public class Program
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
+        app.UseMiniProfiler();
         app.UseRouting();
         app.UseAuthorization();
 
