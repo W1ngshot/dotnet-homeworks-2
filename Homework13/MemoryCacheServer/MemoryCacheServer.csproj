@@ -7,15 +7,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="Views\Calculator\Index.cshtml" />
-      <AdditionalFiles Include="Views\Shared\_Layout.cshtml" />
-      <AdditionalFiles Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
-      <AdditionalFiles Include="Views\_ViewImports.cshtml" />
-      <AdditionalFiles Include="Views\_ViewStart.cshtml" />
+      <None Update="Views\Shared\_Layout.csthml.css">
+        <DependentUpon>_Layout.cshtml</DependentUpon>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="Views\Shared\_Layout.cshtml.css" />
+      <_ContentIncludedByDefault Remove="Views\Calculator\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\_ValidationScriptsPartial.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_ViewImports.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_ViewStart.cshtml" />
     </ItemGroup>
 
 </Project>
