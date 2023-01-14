@@ -1,0 +1,62 @@
+﻿.dnd--form {
+    margin-top: 25px;
+}
+
+.dnd--title {
+    display: flex;
+    justify-content: center;
+}
+
+.dnd--grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    place-items: flex-end;
+    gap: 20px;
+}
+
+.dnd--grid-element {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.dnd--characters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: center;
+    margin-top: 50px;
+}
+
+.dnd--characters-character {
+    display: flex;
+    flex-direction: column;
+}
+
+.dnd--character-stats {
+    font-size: 24px;
+}
+
+.dnd--combat {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+.dnd--combat-title {
+    display: flex;
+    justify-content: center;
+}
+
+.dnd--combat-log {
+    display: flex;
+    flex-direction: column;
+}
+
+.dnd--combat-log-element {
+    font-size: 20px;
+}
+
+.dnd--combat-critical {
+    color: red;
+}

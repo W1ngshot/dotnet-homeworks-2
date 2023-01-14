@@ -1,0 +1,163 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "DnD";
+}
+
+<h1 class="dnd--title">DnD</h1>
+<div class="dnd--form">
+    <h4>Insert information to start</h4>
+    <form method="post">
+        <div class="dnd--grid">
+            <div class="dnd--grid-element">
+                <label asp-for="Player!.Name" class="control-label">User name:</label>
+                <input type="text" asp-for="Player!.Name" class="form-control"/>
+                <span class="text-danger" asp-validation-for="Player!.Name"></span>
+            </div>
+            
+            <div class="dnd--grid-element">
+                <label asp-for="Player!.Health" class="control-label">Health:</label>
+                <input type="text" asp-for="Player!.Health" class="form-control"/>
+                <span class="text-danger" asp-validation-for="Player!.Health"></span>
+            </div>
+            
+            <div class="dnd--grid-element">
+                <label asp-for="Player!.AttacksPerRound" class="control-label">Attacks Per Round:</label>
+                <input type="text" asp-for="Player!.AttacksPerRound" class="form-control"/>
+                <span class="text-danger" asp-validation-for="Player!.AttacksPerRound"></span>
+            </div>
+            
+            <div class="dnd--grid-element">
+                <label asp-for="Player!.DamageModifier" class="control-label">Damage Modifier:</label>
+                <input type="text" asp-for="Player!.DamageModifier" class="form-control"/>
+                <span class="text-danger" asp-validation-for="Player!.DamageModifier"></span>
+            </div>
+            
+            <div class="dnd--grid-element">
+                <label asp-for="Player!.RollsCount" class="control-label">Rolls Count:</label>
+                <input type="text" asp-for="Player!.RollsCount" class="form-control"/>
+                <span class="text-danger" asp-validation-for="Player!.RollsCount"></span>
+            </div>
+            
+            <div class="dnd--grid-element">
+                <label asp-for="Player!.DiceSize" class="control-label">Dice Size:</label>
+                <input type="text" asp-for="Player!.DiceSize" class="form-control"/>
+                <span class="text-danger" asp-validation-for="Player!.DiceSize"></span>
+            </div>
+            
+            <div class="dnd--grid-element">
+                <label asp-for="Player!.AttackModifier" class="control-label">Attack Modifier:</label>
+                <input type="text" asp-for="Player!.AttackModifier" class="form-control"/>
+                <span class="text-danger" asp-validation-for="Player!.AttackModifier"></span>
+            </div>
+
+            <div class="dnd--grid-element">
+                <label asp-for="Player!.Armor" class="control-label">Armor:</label>
+                <input type="text" asp-for="Player!.Armor" class="form-control"/>
+                <span class="text-danger" asp-validation-for="Player!.Armor"></span>
+            </div>
+
+            <input type="submit" class="btn btn-primary w-100" value="Fight"/>
+        </div>
+    </form>
+</div>
+@if (Model.Monster is not null && Model.Player is not null)
+{
+    <div class="dnd--characters">
+        <div class="dnd--characters-character">
+            <div class="dnd--character-stats">Name: @Model.Player.Name</div>
+            <div class="dnd--character-stats">Health: @Model.Player.Health</div>
+            <div class="dnd--character-stats">Damage: @(Model.Player.RollsCount)d@(Model.Player.DiceSize)</div>
+            <div class="dnd--character-stats">Damage Modifier: @Model.Player.DamageModifier</div>
+            <div class="dnd--character-stats">Attacks Per Round: @Model.Player.AttacksPerRound</div>
+            <div class="dnd--character-stats">Attack Modifier: @Model.Player.AttackModifier</div>
+            <div class="dnd--character-stats">Armor: @Model.Player.Armor</div>
+        </div>
+        <div class="dnd--characters-character">
+            <div class="dnd--character-stats">Name: @Model.Monster.Name</div>
+            <div class="dnd--character-stats">Health: @Model.Monster.Health</div>
+            <div class="dnd--character-stats">Damage: @(Model.Monster.RollsCount)d@(Model.Monster.DiceSize)</div>
+            <div class="dnd--character-stats">Damage Modifier: @Model.Monster.DamageModifier</div>
+            <div class="dnd--character-stats">Attacks Per Round: @Model.Monster.AttacksPerRound</div>
+            <div class="dnd--character-stats">Attack Modifier: @Model.Monster.AttackModifier</div>
+            <div class="dnd--character-stats">Armor: @Model.Monster.Armor</div>
+        </div>
+    </div>
+}
+
+@{
+    var result = Model.FightResult;
+}
+@if (result is not null)
+{
+    <div class="dnd--combat">
+        <h2 class="dnd--combat-title">
+            @(result.IsPlayerWin ? "You win!" : "You lose :(")
+        </h2>
+        <div class="dnd--combat-log">
+            @foreach(var round in result.Rounds)
+            {
+                <h3>Round @round.Number</h3>
+                @foreach (var hit in round.Hits)
+                {
+                    <p class="dnd--combat-log-element">
+                        @(hit.AttackerName) throws @(hit.DiceRoll) and 
+                        @if (hit.IsHit)
+                        {
+                            <text>hits @(hit.DiceRoll) + @(hit.AttackerAttackModifier) more than @(hit.TargetArmor)</text>
+                        }
+                        else
+                        {
+                            <text>misses @(hit.DiceRoll) + @(hit.AttackerAttackModifier) less or equal than @(hit.TargetArmor)</text>
+                        }
+                    </p>
+
+                    if (@hit.IsHit)
+                    {
+                        <p class="dnd--combat-log-element">
+                            @if (@hit.IsCritical)
+                            {
+                                <text>Critical Hit! </text>
+                            }
+                            else
+                            {
+                                <text>Hit! </text>
+                            }
+                            @hit.AttackerName deals @hit.TargetName @hit.TotalDamage damage 
+                            (@hit.AttackerDamageModifier
+                            @foreach (var roll in hit.PlayerDiceRolls)
+                            {
+                                <text> + @roll</text>
+                            })
+                            @if (hit.IsCritical)
+                            {
+                                <text> * 2</text>
+                            }
+                            .
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="dnd--combat-log-element">
+                            Miss! 0 damage!
+                        </p>
+                    }
+
+                    if (hit.TargetRemainingHealth > 0)
+                    {
+                        <p class="dnd--combat-log-element">
+                            @hit.TargetName now has @hit.TargetRemainingHealth hp.
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="dnd--combat-log-element">
+                            @hit.TargetName died!
+                        </p>
+                    }
+                    <br/>
+                }
+            }
+        </div>
+    </div>
+}
